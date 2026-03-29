@@ -1,9 +1,12 @@
 import { type Ref, useCallback, useEffect, useRef, useState } from "react";
 import type { ErrorVisibilityMode } from "../types";
 
-type FormControl = HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement;
-type Invalidity = Exclude<keyof ValidityState, "valid">;
-type CustomMessages = Partial<
+export type FormControl =
+  | HTMLTextAreaElement
+  | HTMLInputElement
+  | HTMLSelectElement;
+export type Invalidity = Exclude<keyof ValidityState, "valid">;
+export type CustomMessages = Partial<
   Record<Invalidity, string | ((input: FormControl) => string)>
 >;
 
@@ -68,7 +71,7 @@ type usePlainValidationType = (props?: {
   errorVisibilityMode?: ErrorVisibilityMode;
   inputRef?: Ref<FormControl | null>;
 }) => {
-  inputRef: (el: FormControl) => void;
+  inputRef: (el: FormControl | null) => void;
   validationMessage?: string;
 };
 
@@ -137,7 +140,7 @@ export const usePlainValidation: usePlainValidationType = ({
   }, [input, form, check]);
 
   const inputRef = useCallback(
-    (el: FormControl) => {
+    (el: FormControl | null) => {
       setInput(el);
 
       // for Mui 5 Select
