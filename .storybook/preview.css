@@ -1,3 +1,8 @@
+:root,
+.docs-story {
+  background-color: light-dark(white, black);
+}
+
 .grid {
   display: grid;
   gap: 8px;

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { fn } from "storybook/test";
 import { Form } from "../components/Form/Form";
-import { Input } from "./Input";
+import { Input } from "./wrappedHtml/Input";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -12,8 +12,8 @@ const meta = {
     onSubmit: fn(),
     children: (
       <div className="grid">
-        <Input type="text" placeholder="required" required />
-        <button type="submit">submit</button>
+        <Input label="Required field" type="text" required />
+        <button type="submit">Submit</button>
       </div>
     ),
   },
@@ -57,8 +57,8 @@ export const InputsOutsideForm: Story = {
       <div className="grid">
         <Input
           form="separate-form"
+          label="Required field"
           type="text"
-          placeholder="required"
           required
         />
         <button form="separate-form" type="submit">

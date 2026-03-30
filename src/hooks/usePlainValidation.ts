@@ -10,13 +10,19 @@ export type CustomMessages = Partial<
   Record<Invalidity, string | ((input: FormControl) => string)>
 >;
 
+export type CustomValidationFunction = (
+  value: string,
+  input: FormControl,
+) => string | undefined;
+
 // This replace ditches the last dot (for Firefox)
 const noDotMessage = (input: FormControl) =>
   input.validationMessage.replace(/\.$/, "");
 
 const getValidationMessage = (
   input: FormControl,
-  customMessages: CustomMessages,
+  customMessages?: CustomMessages,
+  customValidation?: CustomValidationFunction,
 ) => {
   const order: Invalidity[] = [
     "customError",
@@ -31,11 +37,17 @@ const getValidationMessage = (
     "badInput",
   ];
 
+  const customValidationResult = customValidation?.(input.value, input);
+
+  if (customValidationResult) {
+    return customValidationResult;
+  }
+
   for (let i = 0; i < order.length; i += 1) {
     const key = order[i];
 
     if (input.validity[key]) {
-      const customMessage = customMessages[key];
+      const customMessage = customMessages?.[key];
 
       switch (typeof customMessage) {
         case "string":
@@ -68,6 +80,7 @@ const getErrorVisibilityMode = (
 
 type usePlainValidationType = (props?: {
   customMessages?: CustomMessages;
+  customValidation?: CustomValidationFunction;
   errorVisibilityMode?: ErrorVisibilityMode;
   inputRef?: Ref<FormControl | null>;
 }) => {
@@ -76,7 +89,8 @@ type usePlainValidationType = (props?: {
 };
 
 export const usePlainValidation: usePlainValidationType = ({
-  customMessages = {},
+  customMessages,
+  customValidation,
   errorVisibilityMode: errorVisibilityModeProp,
   inputRef: inputRefProp,
 } = {}) => {
@@ -86,6 +100,8 @@ export const usePlainValidation: usePlainValidationType = ({
   const changedRef = useRef(false);
   const customMessagesRef = useRef(customMessages);
   customMessagesRef.current = customMessages;
+  const customValidationRef = useRef(customValidation);
+  customValidationRef.current = customValidation;
 
   const check = useCallback(
     // initialCheck can be Event if check is used as event handler
@@ -104,11 +120,21 @@ export const usePlainValidation: usePlainValidationType = ({
         (mode === "afterChange" && changedRef.current)
       ) {
         setValidationMessage(
-          getValidationMessage(input, customMessagesRef.current),
+          getValidationMessage(
+            input,
+            customMessagesRef.current,
+            customValidationRef.current,
+          ),
         );
       }
     },
-    [input, form, customMessagesRef, errorVisibilityModeProp],
+    [
+      input,
+      form,
+      customMessagesRef,
+      customValidationRef,
+      errorVisibilityModeProp,
+    ],
   );
   const checkRef = useRef(check);
   checkRef.current = check;
