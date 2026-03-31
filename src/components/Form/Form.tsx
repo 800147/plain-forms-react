@@ -40,6 +40,11 @@ export const Form: FunctionComponent<FormProps> = ({
       }
 
       firstInvalid.scrollIntoView({ block: "center" });
+
+      if (firstInvalid.dataset.controlWrapper) {
+        return;
+      }
+
       firstInvalid.focus();
     },
     [onSubmitProp, setOnceSubmitted],

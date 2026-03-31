@@ -1,8 +1,33 @@
+import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-
 import { fn } from "storybook/test";
 import { Form } from "../components/Form/Form";
 import { Input } from "./wrappedHtml/Input";
+import type { FunctionComponent } from "react";
+
+const ControlledFields: FunctionComponent = () => {
+  const [value, setValue] = useState("");
+
+  return (
+    <div className="grid">
+      <Input
+        label="Required field"
+        type="text"
+        required
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
+      <Input
+        label="Same field"
+        type="text"
+        required
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
+      <button type="submit">Submit</button>
+    </div>
+  );
+};
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -67,4 +92,11 @@ export const InputsOutsideForm: Story = {
       </div>
     </>
   ),
+};
+
+export const WithControlledFields: Story = {
+  args: {
+    errorVisibilityMode: "afterInput",
+    children: <ControlledFields />,
+  },
 };

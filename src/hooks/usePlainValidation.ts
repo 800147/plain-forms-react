@@ -1,4 +1,11 @@
-import { type Ref, useCallback, useEffect, useRef, useState } from "react";
+import {
+  type AllHTMLAttributes,
+  type Ref,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import type { ErrorVisibilityMode } from "../types";
 
 export type FormControl =
@@ -15,14 +22,15 @@ export type CustomValidationFunction = (
   input: FormControl,
 ) => string | undefined;
 
-// This replace ditches the last dot (for Firefox)
-const noDotMessage = (input: FormControl) =>
-  input.validationMessage.replace(/\.$/, "");
+export type DefaultMessageConverterFunction = (message: string) => string;
+
+const noConverter: DefaultMessageConverterFunction = (message) => message;
 
 const getValidationMessage = (
   input: FormControl,
   customMessages?: CustomMessages,
   customValidation?: CustomValidationFunction,
+  defaultMessageConverter: DefaultMessageConverterFunction = noConverter,
 ) => {
   const order: Invalidity[] = [
     "customError",
@@ -55,12 +63,17 @@ const getValidationMessage = (
         case "function":
           return customMessage(input);
         default:
-          return noDotMessage(input);
+          return (
+            input.validationMessage &&
+            defaultMessageConverter(input.validationMessage)
+          );
       }
     }
   }
 
-  return noDotMessage(input);
+  return (
+    input.validationMessage && defaultMessageConverter(input.validationMessage)
+  );
 };
 
 const getErrorVisibilityMode = (
@@ -79,10 +92,13 @@ const getErrorVisibilityMode = (
 };
 
 type usePlainValidationType = (props?: {
+  defaultMessageConverter?: DefaultMessageConverterFunction;
   customMessages?: CustomMessages;
   customValidation?: CustomValidationFunction;
   errorVisibilityMode?: ErrorVisibilityMode;
   inputRef?: Ref<FormControl | null>;
+  /** For controlled components */
+  propsValue?: AllHTMLAttributes<HTMLInputElement>["value"];
 }) => {
   inputRef: (el: FormControl | null) => void;
   validationMessage?: string;
@@ -93,29 +109,36 @@ export const usePlainValidation: usePlainValidationType = ({
   customValidation,
   errorVisibilityMode: errorVisibilityModeProp,
   inputRef: inputRefProp,
+  propsValue,
+  defaultMessageConverter,
 } = {}) => {
   const [validationMessage, setValidationMessage] = useState<string>();
   const [input, setInput] = useState<FormControl | null>(null);
   const form = input?.form;
+  const isControlled = propsValue !== undefined;
   const changedRef = useRef(false);
   const customMessagesRef = useRef(customMessages);
   customMessagesRef.current = customMessages;
   const customValidationRef = useRef(customValidation);
   customValidationRef.current = customValidation;
+  const defaultMessageConverterRef = useRef(defaultMessageConverter);
+  defaultMessageConverterRef.current = defaultMessageConverter;
+  const lastCheckedValueRef = useRef<string | undefined>(undefined);
 
   const check = useCallback(
-    // initialCheck can be Event if check is used as event handler
-    (initialCheck?: boolean | Event) => {
+    (event?: Event, initialCheck?: boolean) => {
       if (!input) {
         return;
       }
+
+      lastCheckedValueRef.current = input.value;
 
       const mode = getErrorVisibilityMode(input, errorVisibilityModeProp);
 
       if (
         mode === "always" ||
         form?.dataset?.onceSubmitted ||
-        (initialCheck as Event)?.type === "submit" ||
+        event?.type === "submit" ||
         (mode === "afterInput" && initialCheck !== true) ||
         (mode === "afterChange" && changedRef.current)
       ) {
@@ -124,17 +147,12 @@ export const usePlainValidation: usePlainValidationType = ({
             input,
             customMessagesRef.current,
             customValidationRef.current,
+            defaultMessageConverterRef.current,
           ),
         );
       }
     },
-    [
-      input,
-      form,
-      customMessagesRef,
-      customValidationRef,
-      errorVisibilityModeProp,
-    ],
+    [input, form, errorVisibilityModeProp],
   );
   const checkRef = useRef(check);
   checkRef.current = check;
@@ -153,24 +171,41 @@ export const usePlainValidation: usePlainValidationType = ({
     };
 
     input.addEventListener("change", onChange);
-    input.addEventListener("input", check);
     form?.addEventListener("submit", check);
+    if (!isControlled) {
+      input.addEventListener("input", check);
+    }
 
-    check(true);
+    check(undefined, true);
 
     return () => {
       input.removeEventListener("change", onChange);
-      input.removeEventListener("input", check);
       form?.removeEventListener("submit", check);
+      if (!isControlled) {
+        input.removeEventListener("input", check);
+      }
     };
-  }, [input, form, check]);
+  }, [input, form, check, isControlled]);
+
+  useEffect(() => {
+    if (
+      lastCheckedValueRef.current === undefined ||
+      String(propsValue) === lastCheckedValueRef.current
+    ) {
+      return;
+    }
+
+    changedRef.current = true;
+
+    checkRef.current();
+  }, [propsValue]);
 
   const inputRef = useCallback(
     (el: FormControl | null) => {
       setInput(el);
 
       // for Mui 5 Select
-      checkRef.current(true);
+      checkRef.current(undefined, true);
 
       if (!inputRefProp) {
         return;

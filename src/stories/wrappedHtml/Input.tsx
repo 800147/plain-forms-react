@@ -3,10 +3,12 @@ import {
   usePlainValidation,
   type CustomMessages,
   type CustomValidationFunction,
+  type DefaultMessageConverterFunction,
 } from "../../hooks/usePlainValidation";
 import type { ErrorVisibilityMode } from "../../types";
 
 export interface InputProps extends HTMLProps<HTMLInputElement> {
+  defaultMessageConverter?: DefaultMessageConverterFunction;
   customMessages?: CustomMessages;
   customValidation?: CustomValidationFunction;
   errorVisibilityMode?: ErrorVisibilityMode;
@@ -14,6 +16,7 @@ export interface InputProps extends HTMLProps<HTMLInputElement> {
 }
 
 export const Input = ({
+  defaultMessageConverter,
   customMessages,
   customValidation,
   errorVisibilityMode,
@@ -23,10 +26,12 @@ export const Input = ({
   ...props
 }: InputProps) => {
   const { inputRef: ref, validationMessage } = usePlainValidation({
+    defaultMessageConverter,
     customMessages,
     customValidation,
     errorVisibilityMode,
     inputRef,
+    propsValue: props.value,
   });
 
   return (

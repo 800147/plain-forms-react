@@ -64,6 +64,18 @@ export const TypeNumber: Story = {
   },
 };
 
+export const DefaultMessageConverter: Story = {
+  args: {
+    errorVisibilityMode: "always",
+    label: 'type="number"',
+    min: 0,
+    max: 100,
+    step: 10,
+    type: "number",
+    defaultMessageConverter: (message) => `Hey, ${message.toLocaleLowerCase()}`,
+  },
+};
+
 export const CustomMessages: Story = {
   args: {
     errorVisibilityMode: "always",
