@@ -170,7 +170,7 @@ export const usePlainValidation: usePlainValidationType = ({
       check();
     };
 
-    input.addEventListener("change", onChange);
+    input.addEventListener("blur", onChange);
     form?.addEventListener("submit", check);
     if (!isControlled) {
       input.addEventListener("input", check);
@@ -179,7 +179,7 @@ export const usePlainValidation: usePlainValidationType = ({
     check(undefined, true);
 
     return () => {
-      input.removeEventListener("change", onChange);
+      input.removeEventListener("blur", onChange);
       form?.removeEventListener("submit", check);
       if (!isControlled) {
         input.removeEventListener("input", check);
@@ -189,16 +189,20 @@ export const usePlainValidation: usePlainValidationType = ({
 
   useEffect(() => {
     if (
+      !input ||
+      propsValue === undefined ||
       lastCheckedValueRef.current === undefined ||
       String(propsValue) === lastCheckedValueRef.current
     ) {
       return;
     }
 
-    changedRef.current = true;
+    if (input !== document.activeElement) {
+      changedRef.current = true;
+    }
 
     checkRef.current();
-  }, [propsValue]);
+  }, [propsValue, input]);
 
   const inputRef = useCallback(
     (el: FormControl | null) => {
