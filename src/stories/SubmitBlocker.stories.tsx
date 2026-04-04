@@ -2,7 +2,7 @@ import { type FunctionComponent, useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { Form } from "../components/Form/Form";
-import { Input } from "./wrappedHtml/Input";
+import { TextField } from "./with-plain-forms-react/TextField";
 import {
   SubmitBlocker,
   type SubmitBlockerProps,
@@ -19,14 +19,14 @@ const WholeForm: FunctionComponent<SubmitBlockerProps> = (props) => {
       }}
     >
       <div className="grid">
-        <Input
+        <TextField
           label="From"
           value={from}
           onChange={(e) => setFrom(e.target.value)}
           type="number"
           required
         />
-        <Input
+        <TextField
           label="To"
           value={to}
           onChange={(e) => setTo(e.target.value)}

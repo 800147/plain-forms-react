@@ -3,32 +3,42 @@ import {
   usePlainValidation,
   type CustomMessages,
   type CustomValidationFunction,
+  type DefaultMessageConverterFunction,
 } from "../../hooks/usePlainValidation";
 import type { ErrorVisibilityMode } from "../../types";
-import { BrokenSelect } from "./BrokenSelect";
+import {
+  BrokenSelect,
+  type BrokenSelectProps,
+} from "../my-components-library/BrokenSelect";
 import { ControlWrapper } from "../../components/ControlWrapper/ControlWrapper";
 
-export interface FixedSelectProps extends HTMLProps<HTMLSelectElement> {
+export interface SelectProps extends BrokenSelectProps {
+  defaultMessageConverter?: DefaultMessageConverterFunction;
   customMessages?: CustomMessages;
   customValidation?: CustomValidationFunction;
   errorVisibilityMode?: ErrorVisibilityMode;
-  label?: string;
+  disabled?: HTMLProps<HTMLSelectElement>["disabled"];
+  form?: HTMLProps<HTMLSelectElement>["form"];
+  name?: HTMLProps<HTMLSelectElement>["name"];
 }
 
-export const FixedSelect = ({
+export const Select = ({
+  defaultMessageConverter,
   customMessages,
   customValidation,
   errorVisibilityMode,
-  label,
-  ref: inputRef,
+  disabled,
+  form,
+  name,
+  errorMessage,
   ...props
-}: FixedSelectProps) => {
+}: SelectProps) => {
   const { inputRef: ref, validationMessage } = usePlainValidation({
+    defaultMessageConverter,
     customMessages,
     customValidation,
     errorVisibilityMode,
-    inputRef,
-    propsValue: String(props.value),
+    propsValue: props.value,
   });
 
   return (
@@ -36,9 +46,14 @@ export const FixedSelect = ({
       ref={ref}
       required={props.required}
       value={props.value}
-      defaultValue={props.defaultValue}
+      disabled={disabled}
+      form={form}
+      name={name}
     >
-      <BrokenSelect label={label} error={validationMessage} {...props} />
+      <BrokenSelect
+        errorMessage={errorMessage || validationMessage}
+        {...props}
+      />
     </ControlWrapper>
   );
 };

@@ -1,21 +1,21 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { Form } from "../components/Form/Form";
-import { Input } from "./wrappedHtml/Input";
+import { TextField } from "./with-plain-forms-react/TextField";
 
 const meta = {
   title: "Example/usePlainValidation",
-  component: Input,
+  component: TextField,
   args: {},
   render: (props) => (
     <Form>
       <div className="grid">
-        <Input {...props} />
+        <TextField {...props} />
         <button type="submit">submit</button>
       </div>
     </Form>
   ),
-} satisfies Meta<typeof Input>;
+} satisfies Meta<typeof TextField>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

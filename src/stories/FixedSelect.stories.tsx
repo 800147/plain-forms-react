@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { Form } from "../components/Form/Form";
-import { FixedSelect, type FixedSelectProps } from "./wrappedHtml/FixedSelect";
+import { Select, type SelectProps } from "./with-plain-forms-react/Select";
 import { useState, type FunctionComponent } from "react";
 
-const WholeForm: FunctionComponent<FixedSelectProps> = (props) => {
+const WholeForm: FunctionComponent<SelectProps> = (props) => {
   const [value, setValue] = useState("");
 
   return (
@@ -14,7 +14,7 @@ const WholeForm: FunctionComponent<FixedSelectProps> = (props) => {
       }}
     >
       <div className="grid">
-        <FixedSelect
+        <Select
           value={value}
           onChange={(e) => {
             setValue(e.currentTarget.value);
@@ -29,10 +29,10 @@ const WholeForm: FunctionComponent<FixedSelectProps> = (props) => {
 
 const meta = {
   title: "Example/FixedSelect",
-  component: FixedSelect,
+  component: Select,
   args: {},
   render: (props) => <WholeForm {...props} />,
-} satisfies Meta<typeof FixedSelect>;
+} satisfies Meta<typeof Select>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -43,9 +43,9 @@ export const Required: Story = {
     required: true,
     children: (
       <>
-        <option value="">--empty--</option>,
-        <option value="one">option one</option>,
-        <option value="two">option two</option>,
+        <option value="">--empty--</option>
+        <option value="one">option one</option>
+        <option value="two">option two</option>
       </>
     ),
   },

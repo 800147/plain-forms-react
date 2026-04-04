@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 import { Form } from "../components/Form/Form";
-import { Input } from "./wrappedHtml/Input";
+import { TextField } from "./with-plain-forms-react/TextField";
 import type { FunctionComponent } from "react";
 
 const ControlledFields: FunctionComponent = () => {
@@ -10,14 +10,14 @@ const ControlledFields: FunctionComponent = () => {
 
   return (
     <div className="grid">
-      <Input
+      <TextField
         label="Required field"
         type="text"
         required
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />
-      <Input
+      <TextField
         label="Same field"
         type="text"
         required
@@ -37,7 +37,7 @@ const meta = {
     onSubmit: fn(),
     children: (
       <div className="grid">
-        <Input label="Required field" type="text" required />
+        <TextField label="Required field" type="text" required />
         <button type="submit">Submit</button>
       </div>
     ),
@@ -80,7 +80,7 @@ export const InputsOutsideForm: Story = {
     <>
       <Form id="separate-form" className="visually-hidden" {...props} />
       <div className="grid">
-        <Input
+        <TextField
           form="separate-form"
           label="Required field"
           type="text"
