@@ -12,10 +12,10 @@ const noop = () => {
 export interface ControlWrapperProps extends HTMLProps<HTMLInputElement> {
   className?: string;
   inputClassname?: string;
-  children?: ReactNode;
-  noStyles?: boolean;
   style?: CSSProperties;
   inputStyle?: CSSProperties;
+  noStyles?: boolean;
+  children?: ReactNode;
 }
 
 export const ControlWrapper: FunctionComponent<ControlWrapperProps> = ({

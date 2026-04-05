@@ -1,5 +1,5 @@
 export type ErrorVisibilityMode =
-  | "always"
-  | "afterInput"
+  | "afterSubmit"
   | "afterChange"
-  | "afterSubmit";
+  | "afterInput"
+  | "always";

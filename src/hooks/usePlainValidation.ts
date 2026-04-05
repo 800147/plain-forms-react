@@ -14,12 +14,12 @@ export type FormControl =
   | HTMLSelectElement;
 export type Invalidity = Exclude<keyof ValidityState, "valid">;
 export type CustomMessages = Partial<
-  Record<Invalidity, string | ((input: FormControl) => string)>
+  Record<Invalidity, string | ((control: FormControl) => string)>
 >;
 
 export type CustomValidationFunction = (
   value: string,
-  input: FormControl,
+  control: FormControl,
 ) => string | undefined;
 
 export type DefaultMessageConverterFunction = (message: string) => string;
@@ -27,7 +27,7 @@ export type DefaultMessageConverterFunction = (message: string) => string;
 const noConverter: DefaultMessageConverterFunction = (message) => message;
 
 const getValidationMessage = (
-  input: FormControl,
+  control: FormControl,
   customMessages?: CustomMessages,
   customValidation?: CustomValidationFunction,
   defaultMessageConverter: DefaultMessageConverterFunction = noConverter,
@@ -45,7 +45,7 @@ const getValidationMessage = (
     "badInput",
   ];
 
-  const customValidationResult = customValidation?.(input.value, input);
+  const customValidationResult = customValidation?.(control.value, control);
 
   if (customValidationResult) {
     return customValidationResult;
@@ -54,30 +54,31 @@ const getValidationMessage = (
   for (let i = 0; i < order.length; i += 1) {
     const key = order[i];
 
-    if (input.validity[key]) {
+    if (control.validity[key]) {
       const customMessage = customMessages?.[key];
 
       switch (typeof customMessage) {
         case "string":
           return customMessage;
         case "function":
-          return customMessage(input);
+          return customMessage(control);
         default:
           return (
-            input.validationMessage &&
-            defaultMessageConverter(input.validationMessage)
+            control.validationMessage &&
+            defaultMessageConverter(control.validationMessage)
           );
       }
     }
   }
 
   return (
-    input.validationMessage && defaultMessageConverter(input.validationMessage)
+    control.validationMessage &&
+    defaultMessageConverter(control.validationMessage)
   );
 };
 
 const getErrorVisibilityMode = (
-  input: FormControl,
+  control: FormControl,
   errorVisibilityModeProp?: ErrorVisibilityMode,
 ): ErrorVisibilityMode => {
   if (errorVisibilityModeProp) {
@@ -85,7 +86,7 @@ const getErrorVisibilityMode = (
   }
 
   return (
-    (input.form?.dataset?.errorVisibilityMode as
+    (control.form?.dataset?.errorVisibilityMode as
       | ErrorVisibilityMode
       | undefined) ?? "afterSubmit"
   );
@@ -96,26 +97,26 @@ type usePlainValidationType = (props?: {
   customMessages?: CustomMessages;
   customValidation?: CustomValidationFunction;
   errorVisibilityMode?: ErrorVisibilityMode;
-  inputRef?: Ref<FormControl | null>;
+  controlRefProp?: Ref<FormControl | null>;
   /** For controlled components */
-  propsValue?: AllHTMLAttributes<HTMLInputElement>["value"];
+  valueProp?: AllHTMLAttributes<FormControl>["value"];
 }) => {
-  inputRef: (el: FormControl | null) => void;
+  controlRef: (el: FormControl | null) => void;
   validationMessage?: string;
 };
 
 export const usePlainValidation: usePlainValidationType = ({
+  defaultMessageConverter,
   customMessages,
   customValidation,
   errorVisibilityMode: errorVisibilityModeProp,
-  inputRef: inputRefProp,
-  propsValue,
-  defaultMessageConverter,
+  controlRefProp,
+  valueProp,
 } = {}) => {
   const [validationMessage, setValidationMessage] = useState<string>();
-  const [input, setInput] = useState<FormControl | null>(null);
-  const form = input?.form;
-  const isControlled = propsValue !== undefined;
+  const [control, setControl] = useState<FormControl | null>(null);
+  const form = control?.form;
+  const isControlled = valueProp !== undefined;
   const changedRef = useRef(false);
   const customMessagesRef = useRef(customMessages);
   customMessagesRef.current = customMessages;
@@ -127,13 +128,13 @@ export const usePlainValidation: usePlainValidationType = ({
 
   const check = useCallback(
     (event?: Event, initialCheck?: boolean) => {
-      if (!input) {
+      if (!control) {
         return;
       }
 
-      lastCheckedValueRef.current = input.value;
+      lastCheckedValueRef.current = control.value;
 
-      const mode = getErrorVisibilityMode(input, errorVisibilityModeProp);
+      const mode = getErrorVisibilityMode(control, errorVisibilityModeProp);
 
       if (
         mode === "always" ||
@@ -144,7 +145,7 @@ export const usePlainValidation: usePlainValidationType = ({
       ) {
         setValidationMessage(
           getValidationMessage(
-            input,
+            control,
             customMessagesRef.current,
             customValidationRef.current,
             defaultMessageConverterRef.current,
@@ -152,13 +153,13 @@ export const usePlainValidation: usePlainValidationType = ({
         );
       }
     },
-    [input, form, errorVisibilityModeProp],
+    [control, form, errorVisibilityModeProp],
   );
   const checkRef = useRef(check);
   checkRef.current = check;
 
   useEffect(() => {
-    if (!input) {
+    if (!control) {
       return () => {
         /* Noop */
       };
@@ -170,63 +171,63 @@ export const usePlainValidation: usePlainValidationType = ({
       check();
     };
 
-    input.addEventListener("blur", onChange);
+    control.addEventListener("blur", onChange);
     form?.addEventListener("submit", check);
     if (!isControlled) {
-      input.addEventListener("input", check);
+      control.addEventListener("input", check);
     }
 
     check(undefined, true);
 
     return () => {
-      input.removeEventListener("blur", onChange);
+      control.removeEventListener("blur", onChange);
       form?.removeEventListener("submit", check);
       if (!isControlled) {
-        input.removeEventListener("input", check);
+        control.removeEventListener("input", check);
       }
     };
-  }, [input, form, check, isControlled]);
+  }, [control, form, check, isControlled]);
 
   useEffect(() => {
     if (
-      !input ||
-      propsValue === undefined ||
+      !control ||
+      valueProp === undefined ||
       lastCheckedValueRef.current === undefined ||
-      String(propsValue) === lastCheckedValueRef.current
+      String(valueProp) === lastCheckedValueRef.current
     ) {
       return;
     }
 
-    if (input !== document.activeElement) {
+    if (control !== document.activeElement) {
       changedRef.current = true;
     }
 
     checkRef.current();
-  }, [propsValue, input]);
+  }, [valueProp, control]);
 
-  const inputRef = useCallback(
+  const controlRef = useCallback(
     (el: FormControl | null) => {
-      setInput(el);
+      setControl(el);
 
       // for Mui 5 Select
       checkRef.current(undefined, true);
 
-      if (!inputRefProp) {
+      if (!controlRefProp) {
         return;
       }
 
-      if (typeof inputRefProp === "function") {
-        inputRefProp(el);
+      if (typeof controlRefProp === "function") {
+        controlRefProp(el);
       } else {
         // eslint-disable-next-line react-hooks/immutability
-        inputRefProp.current = el;
+        controlRefProp.current = el;
       }
     },
-    [inputRefProp, setInput],
+    [controlRefProp, setControl],
   );
 
   return {
     validationMessage,
-    inputRef,
+    controlRef,
   };
 };

@@ -1,15 +1,15 @@
 import type { HTMLProps } from "react";
 import {
+  TextField as UiTextField,
+  type TextFieldProps as UiTextFieldProps,
+} from "../my-components-library/TextField";
+import {
   usePlainValidation,
   type CustomMessages,
   type CustomValidationFunction,
   type DefaultMessageConverterFunction,
-} from "../../hooks/usePlainValidation";
-import type { ErrorVisibilityMode } from "../../types";
-import {
-  TextField as UiTextField,
-  type TextFieldProps as UiTextFieldProps,
-} from "../my-components-library/TextField";
+  type ErrorVisibilityMode,
+} from "../../";
 
 export interface TextFieldProps extends UiTextFieldProps {
   defaultMessageConverter?: DefaultMessageConverterFunction;
@@ -51,13 +51,13 @@ export const TextField = ({
   errorMessage,
   ...props
 }: TextFieldProps) => {
-  const { inputRef: ref, validationMessage } = usePlainValidation({
+  const { controlRef, validationMessage } = usePlainValidation({
     defaultMessageConverter,
     customMessages,
     customValidation,
     errorVisibilityMode,
-    inputRef: inputProps?.ref,
-    propsValue: props.value,
+    controlRefProp: inputProps?.ref,
+    valueProp: props.value,
   });
 
   return (
@@ -65,7 +65,7 @@ export const TextField = ({
       errorMessage={errorMessage || validationMessage}
       inputProps={{
         ...inputProps,
-        ref,
+        ref: controlRef,
         disabled,
         form,
         name,

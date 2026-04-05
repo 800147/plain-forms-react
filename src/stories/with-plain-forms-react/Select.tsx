@@ -4,8 +4,8 @@ import {
   type CustomMessages,
   type CustomValidationFunction,
   type DefaultMessageConverterFunction,
-} from "../../hooks/usePlainValidation";
-import type { ErrorVisibilityMode } from "../../types";
+  type ErrorVisibilityMode,
+} from "../../";
 import {
   BrokenSelect,
   type BrokenSelectProps,
@@ -33,17 +33,17 @@ export const Select = ({
   errorMessage,
   ...props
 }: SelectProps) => {
-  const { inputRef: ref, validationMessage } = usePlainValidation({
+  const { controlRef: inputRef, validationMessage } = usePlainValidation({
     defaultMessageConverter,
     customMessages,
     customValidation,
     errorVisibilityMode,
-    propsValue: props.value,
+    valueProp: props.value,
   });
 
   return (
     <ControlWrapper
-      ref={ref}
+      ref={inputRef}
       required={props.required}
       value={props.value}
       disabled={disabled}

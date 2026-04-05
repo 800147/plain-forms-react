@@ -26,19 +26,19 @@ const VISUALLY_HIDDEN: CSSProperties = {
 
 export const SubmitBlocker: FunctionComponent<SubmitBlockerProps> = ({
   errorVisibilityMode,
-  ref: inputRef,
+  ref,
   style,
   ...props
 }) => {
-  const { inputRef: ref, validationMessage } = usePlainValidation({
+  const { controlRef, validationMessage } = usePlainValidation({
     errorVisibilityMode:
       errorVisibilityMode === "afterSubmit" ? "afterSubmit" : "always",
-    inputRef,
+    controlRefProp: ref,
   });
 
   return (
     <ControlWrapper
-      ref={ref}
+      ref={controlRef}
       style={validationMessage ? style : VISUALLY_HIDDEN}
       {...props}
       value=""

@@ -6,6 +6,7 @@ import {
   useState,
 } from "react";
 import type { ErrorVisibilityMode } from "../../types";
+import type { FormControl } from "../../hooks/usePlainValidation";
 
 export interface FormProps {
   className?: string;
@@ -30,7 +31,7 @@ export const Form: FunctionComponent<FormProps> = ({
 
       setOnceSubmitted(true);
 
-      const firstInvalid: HTMLInputElement | null =
+      const firstInvalid: FormControl | null =
         e.currentTarget.querySelector(":invalid");
 
       if (!firstInvalid) {
