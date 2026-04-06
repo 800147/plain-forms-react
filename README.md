@@ -7,7 +7,7 @@ experience to React with component libraries in mind. There are many
 approaches on how form validation should work in React. Often those
 solutions require to configure each form and wrap it in special React
 context that can be annoying. Meanwhile HTML has its own form validation
-mechanizm that covers most of the use cases and works without any
+mechanism that covers most of the use cases and works without any
 configuration.
 
 Here's how html forms looks like:
@@ -25,10 +25,11 @@ Here's how html forms looks like:
 ```
 
 It's so simple and yet effective! This form can't be submitted until all
-the requirements are met. And while they not, the proper error messages
-will apear near corresponding fields. And the code above is everything
-you need to do to make it work. That's what we want from form validation
-in React and here's how it would look like with Plain-Forms-React:
+the requirements are met. And while they are not, the proper error 
+messages will appear near corresponding fields. And the code above is 
+everything you need to do to make it work. That's what we want from form 
+validation in React and here's how it would look like with 
+Plain-Forms-React:
 
 ```html
 <Form>
@@ -86,10 +87,10 @@ but that's pretty much it. No other dependencies needed.
 
 One of the principles of Plain-Forms-React is passing the validation
 status of native HTML controls to props of React components. So you
-have to prepair your components to work properly. Just wrap form
+have to prepare your components to work properly. Just wrap form
 controls components with a HOC using `usePlainValidation` hook.
 
-Here is the exaple of how it might look for `TextField` component:
+Here is the example of how it might look for `TextField` component:
 ```tsx
 import type { HTMLProps } from "react";
 import {
@@ -202,7 +203,7 @@ that case — `ControlWrapper`.
 
 ### Using the form
 
-Now when you sut everything up properly, you can use `Form`
+Now when you set everything up properly, you can use `Form`
 component
 
 ```html
@@ -225,13 +226,13 @@ component
 </Form>
 ```
 
-* Ofcourse you should use your own prepaired version of the `TextField`
+* Ofcourse you should use your own prepared version of the `TextField`
 here.
 * You can specify error visibility modes using `errorVisibilityMode`
 prop. All options are: `"afterSubmit"` (default), `"afterChange"`,
 `"afterInput"`, `"always"`
 * Don't forget to apply `preventDefault` function to prevent the
-default behaviour of the form if you you need.
+default behaviour of the form if you need.
 
 ### Cross-field errors
 
