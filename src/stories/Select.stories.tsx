@@ -1,31 +1,33 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { BrokenSelect } from "./my-components-library/BrokenSelect";
+import { Select } from "./with-plain-forms-react/Select";
+import { Form } from "plain-forms-react";
 
 const meta = {
-  title: "Example/BrokenSelect",
-  component: BrokenSelect,
+  title: "Example/Select",
+  component: Select,
   args: {},
   render: (props) => (
-    <form
+    <Form
       onSubmit={(e) => {
         e.preventDefault();
       }}
+      errorVisibilityMode="afterChange"
     >
       <div className="grid">
-        <BrokenSelect {...props} />
+        <Select {...props} />
         <button type="submit">Submit</button>
       </div>
-    </form>
+    </Form>
   ),
-} satisfies Meta<typeof BrokenSelect>;
+} satisfies Meta<typeof Select>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Required: Story = {
   args: {
-    label: "Broken select",
+    label: "Select",
     required: true,
 
     children: (

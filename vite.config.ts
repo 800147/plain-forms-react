@@ -24,6 +24,15 @@ export default defineConfig({
       tsconfigPath: "tsconfig.app.json",
     }),
   ],
+  resolve: {
+    alias: {
+      "my-components-library": resolve(
+        __dirname,
+        "src/stories/my-components-library",
+      ),
+      "plain-forms-react": resolve(__dirname, "src"),
+    },
+  },
   build: {
     lib: {
       entry: resolve(__dirname, "src/index.ts"),

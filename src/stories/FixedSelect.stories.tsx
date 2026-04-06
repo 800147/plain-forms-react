@@ -1,10 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { Form } from "../components/Form/Form";
-import { Select, type SelectProps } from "./with-plain-forms-react/Select";
+import {
+  BrokenSelect,
+  type BrokenSelectProps,
+} from "./with-plain-forms-react/BrokenSelect";
 import { useState, type FunctionComponent } from "react";
 
-const WholeForm: FunctionComponent<SelectProps> = (props) => {
+const WholeForm: FunctionComponent<BrokenSelectProps> = (props) => {
   const [value, setValue] = useState("");
 
   return (
@@ -14,7 +17,7 @@ const WholeForm: FunctionComponent<SelectProps> = (props) => {
       }}
     >
       <div className="grid">
-        <Select
+        <BrokenSelect
           value={value}
           onChange={(e) => {
             setValue(e.currentTarget.value);
@@ -29,10 +32,10 @@ const WholeForm: FunctionComponent<SelectProps> = (props) => {
 
 const meta = {
   title: "Example/FixedSelect",
-  component: Select,
+  component: BrokenSelect,
   args: {},
   render: (props) => <WholeForm {...props} />,
-} satisfies Meta<typeof Select>;
+} satisfies Meta<typeof BrokenSelect>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

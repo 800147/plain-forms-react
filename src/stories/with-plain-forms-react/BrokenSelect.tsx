@@ -1,17 +1,18 @@
 import { type HTMLProps } from "react";
 import {
-  Select as UiSelect,
-  type SelectProps as UiSelectProps,
+  BrokenSelect as UiBrokenSelect,
+  type BrokenSelectProps as UiBrokenSelectProps,
 } from "my-components-library";
 import {
   usePlainValidation,
+  ControlWrapper,
   type CustomMessages,
   type CustomValidationFunction,
   type DefaultMessageConverterFunction,
   type ErrorVisibilityMode,
 } from "plain-forms-react";
 
-export interface SelectProps extends UiSelectProps {
+export interface BrokenSelectProps extends UiBrokenSelectProps {
   defaultMessageConverter?: DefaultMessageConverterFunction;
   customMessages?: CustomMessages;
   customValidation?: CustomValidationFunction;
@@ -21,7 +22,7 @@ export interface SelectProps extends UiSelectProps {
   name?: HTMLProps<HTMLSelectElement>["name"];
 }
 
-export const Select = ({
+export const BrokenSelect = ({
   defaultMessageConverter,
   customMessages,
   customValidation,
@@ -29,10 +30,9 @@ export const Select = ({
   disabled,
   form,
   name,
-  selectProps,
   errorMessage,
   ...props
-}: SelectProps) => {
+}: BrokenSelectProps) => {
   const { controlRef, validationMessage } = usePlainValidation({
     defaultMessageConverter,
     customMessages,
@@ -42,16 +42,18 @@ export const Select = ({
   });
 
   return (
-    <UiSelect
-      selectProps={{
-        ...selectProps,
-        ref: controlRef,
-        disabled,
-        form,
-        name,
-      }}
-      errorMessage={errorMessage || validationMessage}
-      {...props}
-    />
+    <ControlWrapper
+      ref={controlRef}
+      required={props.required}
+      value={props.value}
+      disabled={disabled}
+      form={form}
+      name={name}
+    >
+      <UiBrokenSelect
+        errorMessage={errorMessage || validationMessage}
+        {...props}
+      />
+    </ControlWrapper>
   );
 };

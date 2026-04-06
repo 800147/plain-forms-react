@@ -2,14 +2,14 @@ import type { HTMLProps } from "react";
 import {
   TextField as UiTextField,
   type TextFieldProps as UiTextFieldProps,
-} from "../my-components-library/TextField";
+} from "my-components-library";
 import {
   usePlainValidation,
   type CustomMessages,
   type CustomValidationFunction,
   type DefaultMessageConverterFunction,
   type ErrorVisibilityMode,
-} from "../../";
+} from "plain-forms-react";
 
 export interface TextFieldProps extends UiTextFieldProps {
   defaultMessageConverter?: DefaultMessageConverterFunction;

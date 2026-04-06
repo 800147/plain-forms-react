@@ -26,9 +26,10 @@ Here's how html forms looks like:
 
 It's so simple and yet effective! This form can't be submitted until all
 the requirements are met. And while they are not, the proper error 
-messages will appear near corresponding fields. And the code above is 
-everything you need to do to make it work. That's what we want from form 
-validation in React and here's how it would look like with 
+messages will appear near corresponding fields. Also the page will be 
+scrolled to first invalid field and that field will be focused. And the 
+code above is everything you need to do to make it work. That's what we
+want from form validation in React and here's how it would look like with 
 Plain-Forms-React:
 
 ```html
@@ -96,7 +97,7 @@ import type { HTMLProps } from "react";
 import {
   TextField as UiTextField,
   type TextFieldProps as UiTextFieldProps,
-} from "my-components-library/TextField";
+} from "my-components-library";
 import {
   usePlainValidation,
   type CustomMessages,

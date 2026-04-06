@@ -171,7 +171,8 @@ export const usePlainValidation: usePlainValidationType = ({
       check();
     };
 
-    control.addEventListener("blur", onChange);
+    control.addEventListener("blur", onChange); // for input
+    control.addEventListener("change", onChange); // for select
     form?.addEventListener("submit", check);
     if (!isControlled) {
       control.addEventListener("input", check);
@@ -181,6 +182,7 @@ export const usePlainValidation: usePlainValidationType = ({
 
     return () => {
       control.removeEventListener("blur", onChange);
+      control.removeEventListener("change", onChange);
       form?.removeEventListener("submit", check);
       if (!isControlled) {
         control.removeEventListener("input", check);
