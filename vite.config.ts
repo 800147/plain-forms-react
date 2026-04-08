@@ -22,6 +22,7 @@ export default defineConfig({
     dts({
       exclude: ["**/*.stories.tsx", "src/stories"],
       tsconfigPath: "tsconfig.app.json",
+      insertTypesEntry: true,
     }),
   ],
   resolve: {
