@@ -60,7 +60,7 @@ export const Form: FunctionComponent<FormProps> = ({
       }
 
       if (!preventFirstInvalidScroll) {
-        firstInvalid.scrollIntoView({ block: "center" });
+        firstInvalid.scrollIntoView({ block: "center", behavior: "smooth" });
       }
 
       if (!preventFirstInvalidFocus && !firstInvalid.dataset.controlWrapper) {
