@@ -235,12 +235,26 @@ prop. All options are: `"afterSubmit"` (default), `"afterChange"`,
 * Don't forget to apply `preventDefault` function to prevent the
 default behaviour of the form if you need.
 
+Also since we use HTML controls, you can even position your fields 
+outside of the form and link them together by form id:
+
+```tsx
+<header>
+  <TextField form="footer-form" required />
+</header>
+<footer>
+  <Form id="footer-form">
+    <button type="submit">submit</button>
+  </Form>
+</footer>
+```
+
 ### Cross-field errors
 
-Some errors are related with not one but several fields. To add those
-errors, make them appear respecting selected error visibility mode
-and block the form submittion you can use `SubmitBlocker` component.
-Here's how it works:
+Some errors are related with not one but several fields. You can use
+`SubmitBlocker` component to add those errors, make them appear 
+respecting selected error visibility mode and block the form 
+submittion. Here's how it works:
 
 ```tsx
 const MyForm: FunctionComponent = () => {

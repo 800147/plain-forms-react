@@ -35,6 +35,7 @@ const meta = {
   component: Form,
   args: {
     onSubmit: fn(),
+    onSubmitDeny: fn(),
     children: (
       <div className="grid">
         <TextField label="Required field" type="text" required />
@@ -73,22 +74,23 @@ export const ValidationAlways: Story = {
 };
 
 export const InputsOutsideForm: Story = {
-  args: {
-    children: [],
-  },
+  args: {},
   render: (props) => (
     <>
-      <Form id="separate-form" className="visually-hidden" {...props} />
       <div className="grid">
-        <TextField
-          form="separate-form"
-          label="Required field"
-          type="text"
-          required
-        />
-        <button form="separate-form" type="submit">
-          submit
-        </button>
+        <header>
+          <TextField
+            form="footer-form"
+            label="Required field"
+            type="text"
+            required
+          />
+        </header>
+        <footer>
+          <Form id="footer-form" {...props}>
+            <button type="submit">submit</button>
+          </Form>
+        </footer>
       </div>
     </>
   ),
