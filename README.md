@@ -6,11 +6,11 @@ Plain-Forms-React is a library that aims to bring the plain HTML forms
 experience to React with component libraries in mind. There are many
 approaches on how form validation should work in React. Often those
 solutions require to configure each form and wrap it in special React
-context that can be annoying. Meanwhile HTML has its own form validation
+context that can be annoying. Meanwhile HTML have its own form validation
 mechanism that covers most of the use cases and works without any
 configuration.
 
-Here's how html forms looks like:
+Here's how HTML form looks like:
 ```html
 <form>
   <input type="email" required>
@@ -60,9 +60,9 @@ under the hood. There are two core parts of the library:
 1. `Form` component — it's just an HTML `form` element
 and some javascript around it to make everything work.
 2. `usePlainValidation` hook — a React hook that should be
-used to wrap form controls components provided by your components
+used to wrap form control components provided by your components
 library. It connects to `input`/`textarea`/`select`
-elements inside the components and gets validation status from it.
+element inside the component and gets validation status from it.
 
 Those two parts just use native HTML forms and javascript around them
 brings their validation state to React components.
@@ -70,7 +70,6 @@ brings their validation state to React components.
 If your component doesn't use native HTML control inside it, you can use
 `ControlWrapper` — a component that contains invisible `input`
 element specifically for such cases.
-
 
 ## Getting started
 
@@ -89,7 +88,7 @@ but that's pretty much it. No other dependencies needed.
 One of the principles of Plain-Forms-React is passing the validation
 status of native HTML controls to props of React components. So you
 have to prepare your components to work properly. Just wrap form
-controls components with a HOC using `usePlainValidation` hook.
+control components with a HOC using `usePlainValidation` hook.
 
 Here is the example of how it might look for `TextField` component:
 ```tsx

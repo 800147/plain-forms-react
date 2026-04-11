@@ -1,6 +1,14 @@
 {
   "name": "plain-forms-react",
   "private": false,
+  "keywords": [
+    "form",
+    "validation"
+  ],
+  "homepage": "https://github.com/800147/plain-forms-react",
+  "license": "MIT",
+  "author": "Kamalov Boolat <800147@gmail.com> (https://800147.github.io/)",
+  "repository": "github:800147/plain-forms-react",
   "version": "0.5.5",
   "type": "module",
   "files": [
