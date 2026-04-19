@@ -1,0 +1,121 @@
+:root,
+body {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+:root {
+  scroll-behavior: smooth;
+  --sidebar-width: 16rem;
+}
+
+.Document-MenuButton.Document-MenuButton {
+  --size: var(--size-l);
+  --color: light-dark(var(--light-2), var(--dark-4));
+  color: light-dark(var(--dark-4), var(--light-2));
+  position: absolute;
+  transition:
+    transform 0.3s ease-out,
+    opacity 0.3s ease-out;
+}
+
+.Document-MenuButton svg {
+  width: var(--size-l);
+  height: var(--size-l);
+}
+
+.Document-Breadcrumbs {
+  transition: transform 0.3s ease-out;
+  transform: translateX(calc(var(--size-l) * 4));
+}
+
+main {
+  transition:
+    transform 0.3s ease-out,
+    opacity 0.3s ease-out;
+}
+
+.Document-Sidebar {
+  position: absolute;
+  top: 0;
+  margin: 0;
+  padding: 0 var(--size-l);
+  width: var(--sidebar-width);
+  right: calc(50% + 20rem);
+  opacity: 0;
+  transition:
+    transform 0.3s ease-out,
+    opacity 0.3s ease-out;
+  pointer-events: none;
+}
+
+@media (width < 76rem) {
+  :is(
+    .Document_sidebarOpen.Document_sidebarOpen,
+    .Document:has(.Document-Sidebar:focus-within)
+  ) {
+    main {
+      transform: translateX(calc(var(--sidebar-width) + var(--size-l)));
+      opacity: 0.15;
+      user-select: none;
+    }
+
+    .Document-Sidebar {
+      transform: translateX(calc(var(--sidebar-width) + var(--size-l)));
+      opacity: 1;
+
+      ul {
+        pointer-events: all;
+      }
+    }
+  }
+}
+
+.Document-Sidebar ul {
+  padding: 0;
+  margin-left: 0;
+
+  ::before {
+    display: none;
+  }
+}
+
+.Document-Sidebar.Document-Sidebar a {
+  text-decoration: none;
+}
+
+.Document-Sidebar ul:not(.Document-Sidebar > ul) {
+  margin-left: 2ch;
+}
+
+.Document-Sidebar > ul > li:first-child > *:first-child {
+  --margin-top: var(--size-4xl);
+}
+
+@media (max-width: 42rem) {
+  .Document-Sidebar {
+    right: calc(100% - var(--size-l));
+  }
+}
+
+@media (min-width: 76rem) {
+  .Document-MenuButton.Document-MenuButton {
+    pointer-events: none;
+    opacity: 0;
+    transform: translateX(calc(var(--size-l) * -4));
+  }
+
+  .Document-Breadcrumbs {
+    transform: translateX(0);
+  }
+
+  .Document-Sidebar {
+    opacity: 1;
+
+    ul {
+      pointer-events: all;
+    }
+  }
+}
