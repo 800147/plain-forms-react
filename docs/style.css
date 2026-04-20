@@ -8,7 +8,7 @@ body {
 
 :root {
   scroll-behavior: smooth;
-  --sidebar-width: 16rem;
+  --sidebar-width: 15rem;
 }
 
 .Document-MenuButton.Document-MenuButton {
@@ -51,7 +51,7 @@ main {
   pointer-events: none;
 }
 
-@media (width < 76rem) {
+@media (width < 58rem) {
   :is(
     .Document_sidebarOpen.Document_sidebarOpen,
     .Document:has(.Document-Sidebar:focus-within)
@@ -100,7 +100,7 @@ main {
   }
 }
 
-@media (min-width: 76rem) {
+@media (min-width: 58rem) {
   .Document-MenuButton.Document-MenuButton {
     pointer-events: none;
     opacity: 0;
@@ -117,5 +117,31 @@ main {
     ul {
       pointer-events: all;
     }
+  }
+}
+
+@media (max-width: 42rem) {
+  .Document-Sidebar {
+    right: calc(100% - var(--size-l));
+  }
+}
+
+@media (58rem <= width < 74rem) {
+  main {
+    transform: translateX(calc((var(--sidebar-width) + var(--size-l)) / 2));
+  }
+
+  .Document-Breadcrumbs {
+    transform: translateX(calc((var(--sidebar-width) + var(--size-l)) / 2));
+  }
+
+  .Document-MenuButton.Document-MenuButton {
+    transform: translateX(
+      calc((var(--sidebar-width) + var(--size-l)) / 2 - var(--size-l) * 4)
+    );
+  }
+
+  .Document-Sidebar {
+    transform: translateX(calc((var(--sidebar-width) + var(--size-l)) / 2));
   }
 }

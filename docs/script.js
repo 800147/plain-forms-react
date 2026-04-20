@@ -60,7 +60,7 @@ class ContentsSidebar extends HTMLElement {
 
   connectedCallback() {
     const onResize = () => {
-      if (window.matchMedia("(min-width: 76rem)").matches) {
+      if (window.matchMedia("(min-width: 58rem)").matches) {
         this.documentEl.classList.add("Document_wideWindow");
         this.documentEl.classList.remove("Document_sidebarOpen");
         this.menuButton.tabIndex = -1;
@@ -113,7 +113,18 @@ class ContentsSidebar extends HTMLElement {
               {
                 className: `Document-SidebarPage ${window.location.pathname === `${this.base}${url}` ? "Document-SidebarPage_active" : ""}`,
               },
-              [__("p", {}, __("a", { href: `${this.base}${url}` }, [text]))],
+              [
+                __("p", {}, [
+                  __(
+                    "a",
+                    {
+                      href: `${this.base}${url}`,
+                      className: "Document-Text_sansSerif",
+                    },
+                    [text],
+                  ),
+                ]),
+              ],
             ),
           ),
         ]),
@@ -145,7 +156,11 @@ class ContentsSidebar extends HTMLElement {
                     el.addEventListener("click", (e) =>
                       this.documentEl.classList.remove("Document_sidebarOpen"),
                     ),
-                  __("a", { href: `#${el.id}` }, el.textContent),
+                  __(
+                    "a",
+                    { href: `#${el.id}`, className: "Document-Text_sansSerif" },
+                    el.textContent,
+                  ),
                 ),
               ]),
             ]),
