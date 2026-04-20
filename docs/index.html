@@ -14,118 +14,138 @@
       rel="stylesheet"
       href="https://800147.github.io/document/src/document.css"
     />
-    <script
-      type="module"
-      src="https://800147.github.io/document/src/md-reader.js"
-    ></script>
     <link rel="stylesheet" href="./style.css" />
     <script type="module" src="./script.js"></script>
   </head>
-  <body>
+  <body class="Document">
+    <header class="Document-Header">
+      <nav class="Document-Breadcrumbs">
+        <ul>
+          <li><a href="/">800147.github.io</a></li>
+        </ul>
+      </nav>
+    </header>
 
-<header class="Document-Header">
-<nav class="Document-Breadcrumbs">
-<ul><li><a href="/">800147.github.io</a></li></ul>
-</nav>
-</header>
-<pre><noscript>
+    <main>
+      <h1>Plain-Forms-React</h1>
 
+      <h2>About</h2>
 
-# Plain-Forms-React
+      <p>
+        Plain-Forms-React is a library that aims to bring the plain HTML forms
+        experience to React with component libraries in mind. There are many
+        approaches to how form validation should work in React. Often, those
+        solutions require configuring each form and wrapping it in a special
+        React context that can be annoying. Meanwhile, HTML has its own form
+        validation mechanism that covers most use cases and works without any
+        configuration.
+      </p>
 
-## About
+      <p>Here’s what an HTML form looks like:</p>
 
-Plain-Forms-React is a library that aims to bring the plain HTML forms
-experience to React with component libraries in mind. There are many
-approaches to how form validation should work in React. Often, those
-solutions require configuring each form and wrapping it in a special React
-context that can be annoying. Meanwhile, HTML has its own form validation
-mechanism that covers most use cases and works without any
-configuration.
-
-Here’s what an HTML form looks like:
-```html
-<form>
-  <input type="email" required>
-  <input
+      <pre><code class="language-html">&lt;form>
+  &lt;input type="email" required>
+  &lt;input
     type="number"
     min="0"
     max="100"
     step="10"
   >
-  <button type="submit">submit</button>
-</form>
-```
+  &lt;button type="submit">submit&lt;/button>
+&lt;/form></code></pre>
 
-It’s so simple and yet effective! This form can’t be submitted until all
-the requirements are met. And while they are not, the proper error
-messages will appear near the corresponding fields. Also, the page will be
-scrolled to the first invalid field, and that field will be focused. The
-code above is everything you need to make it work. That’s what we
-want from form validation in React — and here’s how it would look with
-Plain-Forms-React:
+      <p>
+        It’s so simple and yet effective! This form can’t be submitted until all
+        the requirements are met. And while they are not, the proper error
+        messages will appear near the corresponding fields. Also, the page will
+        be scrolled to the first invalid field, and that field will be focused.
+        The code above is everything you need to make it work. That’s what we
+        want from form validation in React — and here’s how it would look with
+        Plain-Forms-React:
+      </p>
 
-```html
-<Form>
-  <TextField type="email" required />
-  <TextField
+      <pre><code class="language-html">&lt;Form>
+  &lt;TextField type="email" required />
+  &lt;TextField
     type="number"
     min="0"
     max="100"
     step="10"
   />
-  <Button type="submit">submit</Button>
-</Form>
-```
+  &lt;Button type="submit">submit&lt;/Button>
+&lt;/Form></code></pre>
 
-To be fair, this code is not everything you need. You have to make
-your own `TextField` component first — using
-a `TextField` component from your component library and
-the `usePlainValidation` hook from Plain-Forms-React. After that,
-the code above will work as expected. You can read about all this in
-the documentation.
+      <p>
+        To be fair, this code is not everything you need. You have to make your
+        own <code>TextField</code> component first — using a
+        <code>TextField</code> component from your component library and the
+        <code>usePlainValidation</code> hook from Plain-Forms-React. After that,
+        the code above will work as expected. You can read about all this in the
+        documentation.
+      </p>
 
-## How it works
+      <h2>How it works</h2>
 
-To copy the native HTML form behaviour, we simply use native HTML forms
-under the hood. There are two core parts of the library:
+      <p>
+        To copy the native HTML form behaviour, we simply use native HTML forms
+        under the hood. There are two core parts of the library:
+      </p>
 
-1. `Form` component — it’s just an HTML `form` element
-    with some JavaScript around it to make everything work.
-2. `usePlainValidation` hook — a React hook that should be
-    used to wrap form control components provided by your component
-    library. It connects to `input`/`textarea`/`select`
-    element inside the component and gets the validation status from it.
+      <ol>
+        <li>
+          <code>Form</code> component — it’s just an HTML
+          <code>form</code> element with some JavaScript around it to make
+          everything work.
+        </li>
+        <li>
+          <code>usePlainValidation</code> hook — a React hook that should be
+          used to wrap form control components provided by your component
+          library. It connects to <code>input</code>/<code>textarea</code>/<code
+            >select</code
+          >
+          element inside the component and gets the validation status from it.
+        </li>
+      </ol>
 
-These two parts use native HTML forms, and the JavaScript around them
-brings their validation state to React components.
+      <p>
+        These two parts use native HTML forms, and the JavaScript around them
+        brings their validation state to React components.
+      </p>
 
-If your component doesn’t use a native HTML control inside it, you can use
-the `ControlWrapper` — a component that contains an invisible `input`
-element specifically for such cases.
+      <p>
+        If your component doesn’t use a native HTML control inside it, you can
+        use the <code>ControlWrapper</code> — a component that contains an
+        invisible <code>input</code> element specifically for such cases.
+      </p>
 
-## Getting started
+      <h2>Getting started</h2>
 
-### Installation
+      <h3>Installation</h3>
 
-Installation of the library is pretty common:
-```bash
-npm install plain-forms-react
-```
+      <p>Installation of the library is pretty common:</p>
 
-It will require you to install react and react-dom as peer dependencies,
-but that’s pretty much it. No other dependencies are needed.
+      <pre><code class="language-bash">npm install plain-forms-react</code></pre>
 
-### Preparing components
+      <p>
+        It will require you to install react and react-dom as peer dependencies,
+        but that’s pretty much it. No other dependencies are needed.
+      </p>
 
-One of the principles of Plain-Forms-React is passing the validation
-status of native HTML controls to the props of React components. So you
-have to prepare your components to work properly. Just wrap form
-control components with a HOC using the `usePlainValidation` hook.
+      <h3>Preparing components</h3>
 
-Here’s an example of how it might look for a `TextField` component:
-```tsx
-import type { HTMLProps } from "react";
+      <p>
+        One of the principles of Plain-Forms-React is passing the validation
+        status of native HTML controls to the props of React components. So you
+        have to prepare your components to work properly. Just wrap form control
+        components with a HOC using the <code>usePlainValidation</code> hook.
+      </p>
+
+      <p>
+        Here’s an example of how it might look for a
+        <code>TextField</code> component:
+      </p>
+
+      <pre><code class="language-tsx">import type { HTMLProps } from "react";
 import {
   TextField as UiTextField,
   type TextFieldProps as UiTextFieldProps,
@@ -143,18 +163,18 @@ export interface TextFieldProps extends UiTextFieldProps {
   customMessages?: CustomMessages;
   customValidation?: CustomValidationFunction;
   errorVisibilityMode?: ErrorVisibilityMode;
-  disabled?: HTMLProps<HTMLInputElement>["disabled"];
-  form?: HTMLProps<HTMLInputElement>["form"];
-  name?: HTMLProps<HTMLInputElement>["name"];
-  inputMode?: HTMLProps<HTMLInputElement>["inputMode"];
-  max?: HTMLProps<HTMLInputElement>["max"];
-  maxLength?: HTMLProps<HTMLInputElement>["maxLength"];
-  min?: HTMLProps<HTMLInputElement>["min"];
-  minLength?: HTMLProps<HTMLInputElement>["minLength"];
-  pattern?: HTMLProps<HTMLInputElement>["pattern"];
-  size?: HTMLProps<HTMLInputElement>["size"];
-  step?: HTMLProps<HTMLInputElement>["step"];
-  type?: HTMLProps<HTMLInputElement>["type"];
+  disabled?: HTMLProps&lt;HTMLInputElement>["disabled"];
+  form?: HTMLProps&lt;HTMLInputElement>["form"];
+  name?: HTMLProps&lt;HTMLInputElement>["name"];
+  inputMode?: HTMLProps&lt;HTMLInputElement>["inputMode"];
+  max?: HTMLProps&lt;HTMLInputElement>["max"];
+  maxLength?: HTMLProps&lt;HTMLInputElement>["maxLength"];
+  min?: HTMLProps&lt;HTMLInputElement>["min"];
+  minLength?: HTMLProps&lt;HTMLInputElement>["minLength"];
+  pattern?: HTMLProps&lt;HTMLInputElement>["pattern"];
+  size?: HTMLProps&lt;HTMLInputElement>["size"];
+  step?: HTMLProps&lt;HTMLInputElement>["step"];
+  type?: HTMLProps&lt;HTMLInputElement>["type"];
 }
 
 export const TextField = ({
@@ -188,7 +208,7 @@ export const TextField = ({
   });
 
   return (
-    <UiTextField
+    &lt;UiTextField
       errorMessage={errorMessage || validationMessage}
       inputProps={{
         ...inputProps,
@@ -209,38 +229,54 @@ export const TextField = ({
       {...props}
     />
   );
-};
-```
+};</code></pre>
 
-Here’s what we’re doing here:
+      <p>Here’s what we’re doing here:</p>
 
-* Pass the `controlRef` from the hook to the native `input` element inside
-  `UiTextField`, so the hook can work with it. To keep the
-  `inputProps.ref` prop of the component working, we pass it as an argument
-  to the hook.
-* Make the `input` props that are important for native HTML validation
-  easier to access by making them top-level props.
-* Pass the `validationMessage` returned from the hook to the `errorMessage`
-  field of the component.
-* Add the `defaultMessageConverter`, `customMessages`,
-  `customValidation`, and `errorVisibilityMode` props to our new
-  component to pass them to the hook if needed (all of these are optional).
+      <ul>
+        <li>
+          Pass the <code>controlRef</code> from the hook to the native
+          <code>input</code> element inside <code>UiTextField</code>, so the
+          hook can work with it. To keep the <code>inputProps.ref</code> prop of
+          the component working, we pass it as an argument to the hook.
+        </li>
+        <li>
+          Make the <code>input</code> props that are important for native HTML
+          validation easier to access by making them top-level props.
+        </li>
+        <li>
+          Pass the <code>validationMessage</code> returned from the hook to the
+          <code>errorMessage</code> field of the component.
+        </li>
+        <li>
+          Add the <code>defaultMessageConverter</code>,
+          <code>customMessages</code>, <code>customValidation</code>, and
+          <code>errorVisibilityMode</code> props to our new component to pass
+          them to the hook if needed (all of these are optional).
+        </li>
+      </ul>
 
-After that, you need to do the same thing with `Select`, `Checkbox`,
-and other form control components from your component library.
+      <p>
+        After that, you need to do the same thing with <code>Select</code>,
+        <code>Checkbox</code>, and other form control components from your
+        component library.
+      </p>
 
-If, for some reason, a control component from your component library
-does not use a native control element under the hood or does not give
-you the ability to access it, you can use a wrapper made specifically for
-that case — the `ControlWrapper`.
+      <p>
+        If, for some reason, a control component from your component library
+        does not use a native control element under the hood or does not give
+        you the ability to access it, you can use a wrapper made specifically
+        for that case — the <code>ControlWrapper</code>.
+      </p>
 
-### Using the form
+      <h3>Using the form</h3>
 
-Now, when you’ve set everything up properly, you can use the `Form`
-component
+      <p>
+        Now, when you’ve set everything up properly, you can use the
+        <code>Form</code> component
+      </p>
 
-```html
-<Form
+      <pre><code class="language-html">&lt;Form
   errorVisibilityMode="afterChange"
   onSubmit={(e) => {
     e.preventDefault();
@@ -248,90 +284,106 @@ component
     // Do my submit stuff
   }}
 >
-  <TextField type="email" required />
-  <TextField
+  &lt;TextField type="email" required />
+  &lt;TextField
     type="number"
     min="0"
     max="100"
     step="10"
   />
-  <Button type="submit">submit</Button>
-</Form>
-```
+  &lt;Button type="submit">submit&lt;/Button>
+&lt;/Form></code></pre>
 
-* Of course, you should use your own prepared version of the `TextField`
-  here.
-* You can specify error visibility modes using the `errorVisibilityMode`
-  prop. All available options are: `"afterSubmit"` (default), `"afterChange"`,
-  `"afterInput"`, `"always"`.
-* Don’t forget to apply the `preventDefault` function to prevent the
-  default behaviour of the form if needed.
+      <ul>
+        <li>
+          Of course, you should use your own prepared version of the
+          <code>TextField</code> here.
+        </li>
+        <li>
+          You can specify error visibility modes using the
+          <code>errorVisibilityMode</code> prop. All available options are:
+          <code>"afterSubmit"</code> (default), <code>"afterChange"</code>,
+          <code>"afterInput"</code>, <code>"always"</code>.
+        </li>
+        <li>
+          Don’t forget to apply the <code>preventDefault</code> function to
+          prevent the default behaviour of the form if needed.
+        </li>
+      </ul>
 
-Also, since we use HTML controls, you can even position your fields
-outside of the form and link them together by the form id:
+      <p>
+        Also, since we use HTML controls, you can even position your fields
+        outside of the form and link them together by the form id:
+      </p>
 
-```tsx
-<header>
-  <TextField form="footer-form" required />
-</header>
-<footer>
-  <Form id="footer-form">
-    <button type="submit">submit</button>
-  </Form>
-</footer>
-```
+      <pre><code class="language-tsx">&lt;header>
+  &lt;TextField form="footer-form" required />
+&lt;/header>
+&lt;footer>
+  &lt;Form id="footer-form">
+    &lt;button type="submit">submit&lt;/button>
+  &lt;/Form>
+&lt;/footer></code></pre>
 
-### Cross-field errors
+      <h3>Cross-field errors</h3>
 
-Some errors are related not to one, but to several fields. You can use
-the `SubmitBlocker` component to add those errors, make them appear
-in accordance with the selected error visibility mode, and block the form
-submission. Here’s how it works:
+      <p>
+        Some errors are related not to one, but to several fields. You can use
+        the
+        <code>SubmitBlocker</code> component to add those errors, make them
+        appear in accordance with the selected error visibility mode, and block
+        the form submission. Here’s how it works:
+      </p>
 
-```tsx
-const MyForm: FunctionComponent = () => {
+      <pre><code class="language-tsx">const MyForm: FunctionComponent = () => {
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
 
   return (
-    <Form>
-      <TextField
+    &lt;Form>
+      &lt;TextField
         label="From"
         value={from}
         onChange={(e) => setFrom(e.target.value)}
         type="number"
         required
       />
-      <TextField
+      &lt;TextField
         label="To"
         value={to}
         onChange={(e) => setTo(e.target.value)}
         type="number"
         required
       />
-      {Number(to) < Number(from) && (
-        <SubmitBlocker>
+      {Number(to) &lt; Number(from) &amp;&amp; (
+        &lt;SubmitBlocker>
           "To" can't be less than "From"
-        </SubmitBlocker>
+        &lt;/SubmitBlocker>
       )}
-      <button type="submit">Submit</button>
-    </Form>
+      &lt;button type="submit">Submit&lt;/button>
+    &lt;/Form>
   );
-};
-```
+};</code></pre>
 
-## That’s it!
+      <h2>That’s it!</h2>
 
-That’s everything you should know to start using Plain-Forms-React. Have fun :)
+      <p>
+        That’s everything you should know to start using Plain-Forms-React. Have
+        fun :)
+      </p>
 
-## Thanks
+      <h2>Thanks</h2>
 
-Thanks to Víctor Lillo for
-[the article](https://victorlillo.dev/blog/react-typescript-vite-component-library) that helped me configure this library.
+      <p>
+        Thanks to Víctor Lillo for
+        <a
+          href="https://victorlillo.dev/blog/react-typescript-vite-component-library"
+          >the article</a
+        >
+        that helped me configure this library.
+      </p>
+    </main>
 
-
-</noscript></pre>
-<contents-sidebar></contents-sidebar>
-
+    <contents-sidebar></contents-sidebar>
   </body>
 </html>

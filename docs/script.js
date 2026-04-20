@@ -1,3 +1,9 @@
+// https://highlightjs.org/usage/
+import hljs from "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/es/highlight.min.js";
+hljs.highlightAll();
+
+// El.js
+
 const used = (func, obj) => (func(obj), obj);
 
 const appendChildren = (el, child) => {
