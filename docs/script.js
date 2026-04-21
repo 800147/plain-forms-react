@@ -37,7 +37,6 @@ class ContentsSidebar extends HTMLElement {
   constructor() {
     super();
 
-    this.classList.add("Document-Sidebar");
     this.base =
       window.location.protocol === "https:" ? "/plain-forms-react" : "";
     this.pages = [
@@ -112,27 +111,29 @@ class ContentsSidebar extends HTMLElement {
       );
 
       this.appendChild(
-        __("ul", {}, [
-          this.pages.map(({ url, text }) =>
-            __(
-              "li",
-              {
-                className: `Document-SidebarPage ${window.location.pathname === `${this.base}${url}` ? "Document-SidebarPage_active" : ""}`,
-              },
-              [
-                __("p", {}, [
-                  __(
-                    "a",
-                    {
-                      href: `${this.base}${url}`,
-                      className: "Document-Text_sansSerif",
-                    },
-                    [text],
-                  ),
-                ]),
-              ],
+        __("aside", { className: "Document-Sidebar" }, [
+          __("ul", {}, [
+            this.pages.map(({ url, text }) =>
+              __(
+                "li",
+                {
+                  className: `Document-SidebarPage ${window.location.pathname === `${this.base}${url}` ? "Document-SidebarPage_active" : ""}`,
+                },
+                [
+                  __("p", {}, [
+                    __(
+                      "a",
+                      {
+                        href: `${this.base}${url}`,
+                        className: "Document-Text_sansSerif",
+                      },
+                      [text],
+                    ),
+                  ]),
+                ],
+              ),
             ),
-          ),
+          ]),
         ]),
       );
 
