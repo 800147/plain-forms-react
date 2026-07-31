@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Plain-Forms-React: usePlainValidation</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,<svg viewBox='-10 -15 20 20' xmlns='http://www.w3.org/2000/svg'><text text-anchor='middle'>📄</text></svg>"
+    />
+    <link
+      rel="stylesheet"
+      href="https://800147.github.io/document/src/document.css"
+    />
+    <link rel="stylesheet" href="../style.css" />
+    <script type="module" src="../script.js"></script>
+  </head>
+  <body class="Document">
+    <header class="Document-Header">
+      <nav class="Document-Breadcrumbs">
+        <ul>
+          <li><a href="/">800147.github.io</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <h1>usePlainValidation</h1>
+
+      <h2>About</h2>
+
+      <p>
+        <code>usePlainValidation</code> is a hook that will prepare your component for work
+        with HTML forms. It connects to input/textarea/select element inside the
+        component and properly gets the validation status from it.
+      </p>
+
+      <h2>Usage</h2>
+
+      <pre><code>export const TextField = ({
+  value,
+  errorMessage,
+  inputProps,
+  ...props
+}: TextFieldProps) => {
+  const {
+    controlRef,
+    validationMessage
+  } = usePlainValidation({
+    valueProp: value,
+    controlRefProp: inputProps?.ref,
+  });
+
+  return (
+    &lt;UiTextField
+      value={value}
+      errorMessage={errorMessage || validationMessage}
+      inputProps={{
+        ...inputProps,
+        ref: controlRef,
+      }}
+      {...props}
+    />
+  );
+};</code></pre>
+
+      <h2>Properties</h2>
+
+      <p>The hook takes object as a an argument. That object shoud contain following properties</p>
+
+      <dl>
+        <dt><code>defaultMessageConverter</code> (optional)</dt>
+        <dd>
+          <p><code>(message: string) => string</code></p>
+          <p>
+            This function will be applied to default (provided by browser)
+            validation error messages. It will not be applied to messages from
+            <code>customMessages</code> or
+            <code>customValidation</code> properties.
+          </p>
+        </dd>
+
+        <dt><code>customMessages</code> (optional)</dt>
+        <dd>
+          <p>
+            <code
+              >{ [keyof ValidityState]: string | (control: FormControl) =>
+              string }</code
+            >
+          </p>
+          <p>
+            For each of the
+            <a
+              href="https://developer.mozilla.org/docs/Web/API/ValidityState"
+              target="_blanc"
+              >ValidityState properties</a
+            >
+            (except <code>"valid"</code>) you can specify your own error
+            message. You can set either the constant string or the function that
+            will return it based on the form control HTML element.
+          </p>
+        </dd>
+
+        <dt><code>customValidation</code> (optional)</dt>
+        <dd>
+          <p>
+            <code>
+              (value: string, control: HTMLElement) => string | undefined
+            </code>
+          </p>
+          <p>
+            If you need to catch the validation error that is not covered by
+            <a
+              href="https://developer.mozilla.org/docs/Web/API/ValidityState"
+              target="_blanc"
+              >ValidityState</a
+            >, you can set this function. Each time the function returns truthy
+            string, this string will be used as an error message. After falsy
+            result the default validation mechanism will be used.
+          </p>
+        </dd>
+
+        <dt><code>errorVisibilityMode</code> (optional)</dt>
+        <dd>
+          <p>
+            <code>"afterSubmit" | "afterChange | "afterInput" | "always"</code>
+          </p>
+          <p>Specifies the moment when the validation message is shown.</p>
+          <p>Default value: <code>"afterSubmit"</code></p>
+        </dd>
+
+        <dt><code>controlRefProp</code> (optional)</dt>
+        <dd>
+          <p>
+            <code>
+              Ref&lt;HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
+            </code>
+          </p>
+          <p>React Ref that will be called on the control element at the same time as the returned <code>controlRef</code>.</p>
+        </dd>
+
+        <dt><code>valueProp</code> (optional)</dt>
+        <dd>
+          <p><code>string</code></p>
+          <p>The value prop that you pass to your control element (if your element is controlled)</p>
+        </dd>
+      </dl>
+
+      <h2>Return fields</h2>
+      <p>The hook returns an object that contains following fields</p>
+
+      <dl>
+        <dt><code>validationMessage</code></dt>
+        <dd>
+          <p><code>string | undefined</code></p>
+          <p>
+            The validation message if the field is invalid. Otherwise undefined.
+          </p>
+        </dd>
+
+        <dt><code>controlRef</code></dt>
+        <dd>
+          <p><code>Ref&lt;HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement></code></p>
+          <p>
+            React Ref that should be passed to the control element. It should be input, textarea of select, not wrapping element.
+          </p>
+        </dd>
+      </dl>
+    </main>
+
+    <contents-sidebar></contents-sidebar>
+  </body>
+</html>

@@ -75,9 +75,8 @@ main {
 
 .Document-Sidebar ul {
   padding: 0;
-  margin-left: 0;
 
-  ::before {
+  li::before {
     display: none;
   }
 }
@@ -86,8 +85,21 @@ main {
   text-decoration: none;
 }
 
-.Document-Sidebar ul:not(.Document-Sidebar > ul) {
+.Document-Sidebar.Document-Sidebar > ul > li > p > a::before {
+  content: "— ";
+  display: inline;
+}
+
+.Document-Sidebar ul {
   margin-left: 2ch;
+}
+
+.Document-Sidebar > ul {
+  margin-left: 0;
+}
+
+.Document-Sidebar > ul > li > ul {
+  margin-left: 4ch;
 }
 
 .Document-Sidebar > ul > li:first-child > *:first-child {

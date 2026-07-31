@@ -44,14 +44,14 @@ class ContentsSidebar extends HTMLElement {
         url: "/",
         text: "Plain-Forms-React",
       },
-      // {
-      //   url: "/usePlainValidation/",
-      //   text: "usePlainValidation",
-      // },
-      // {
-      //   url: "/Form/",
-      //   text: "Form",
-      // },
+      {
+        url: "/usePlainValidation/",
+        text: "usePlainValidation",
+      },
+      {
+        url: "/Form/",
+        text: "Form",
+      },
       // {
       //   url: "/ControlWrapper/",
       //   text: "ControlWrapper",
