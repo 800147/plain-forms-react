@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Plain-Forms-React: Form</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,<svg viewBox='-10 -15 20 20' xmlns='http://www.w3.org/2000/svg'><text text-anchor='middle'>📄</text></svg>"
+    />
+    <link
+      rel="stylesheet"
+      href="https://800147.github.io/document/src/document.css"
+    />
+    <link rel="stylesheet" href="../style.css" />
+    <script type="module" src="../script.js"></script>
+  </head>
+  <body class="Document">
+    <header class="Document-Header">
+      <nav class="Document-Breadcrumbs">
+        <ul>
+          <li><a href="/">800147.github.io</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <h1>Form</h1>
+
+      <h2>About</h2>
+
+      <p>
+        <code>Form</code> component behaves like native HTML <code>form</code> element (it uses one inside). It works with spetial components made with <code>usePlainValidation</code> hook.
+      </p>
+
+      <h2>Usage</h2>
+
+      <pre><code>&lt;Form onSubmit={submitHandler}>
+  {/*
+    These textfields should be special
+    components made using usePlainValidation
+    hook
+  */}
+  &lt;TextField type="email" required />
+  &lt;TextField
+    type="number"
+    min="0"
+    max="100"
+    step="10"
+  />
+  &lt;Button type="submit">submit&lt;/Button>
+&lt;/Form></code></pre>
+
+      <h2>Properties</h2>
+
+      <dl>
+        <dt><code>id</code> (optional)</dt>
+        <dd><p><code>string</code></p></dd>
+
+        <dt><code>className</code> (optional)</dt>
+        <dd><p><code>string</code></p></dd>
+
+        <dt><code>onSubmit</code> (optional)</dt>
+        <dd>
+          <p><code>SubmitEventHandler&lt;HTMLFormElement></code></p>
+          <p>Submit callback that will be called if submitted form has no invalid fields</p>
+        </dd>
+
+        <dt><code>onSubmitDeny</code> (optional)</dt>
+        <dd>
+          <p><code>SubmitEventHandler&lt;HTMLFormElement></code></p>
+          <p>Submit callback that will be called on submit decline (due to invalid fields)</p>
+        </dd>
+
+        <dt><code>errorVisibilityMode</code> (optional)</dt>
+        <dd>
+          <p><code>"afterSubmit" | "afterChange | "afterInput" | "always"</code></p>
+          <p>Specifies the moment when the validation message is shown.</p>
+          <p>Default value: <code>"afterSubmit"</code></p>
+        </dd>
+
+        <dt><code>preventFirstInvalidScroll</code> (optional)</dt>
+        <dd>
+          <p><code>boolean</code></p>
+          <p>Turns off the behaviour when page scrolls to first invalid field after submit deny</p>
+        </dd>
+
+        <dt><code>preventFirstInvalidFocus</code> (optional)</dt>
+        <dd>
+          <p><code>boolean</code></p>
+          <p>Turns off the behaviour when first invalid field is focused after submit deny</p>
+        </dd>
+      </dl>
+    </main>
+
+    <contents-sidebar></contents-sidebar>
+  </body>
+</html>
