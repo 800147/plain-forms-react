@@ -3,11 +3,10 @@ import {
   ControlWrapper,
   type ControlWrapperProps,
 } from "../ControlWrapper/ControlWrapper";
-import type { ErrorVisibilityMode } from "../../types";
 import { usePlainValidation } from "../../hooks/usePlainValidation";
 
 export interface SubmitBlockerProps extends ControlWrapperProps {
-  errorVisibilityMode?: ErrorVisibilityMode;
+  errorVisibilityMode?: "afterSubmit" | "always";
 }
 
 const VISUALLY_HIDDEN: CSSProperties = {
@@ -31,8 +30,8 @@ export const SubmitBlocker: FunctionComponent<SubmitBlockerProps> = ({
   ...props
 }) => {
   const { controlRef, validationMessage } = usePlainValidation({
-    errorVisibilityMode:
-      errorVisibilityMode === "afterSubmit" ? "afterSubmit" : "always",
+    errorVisibilityMode,
+    _allowedModes: ['always', 'afterSubmit'],
     controlRefProp: ref,
   });
 

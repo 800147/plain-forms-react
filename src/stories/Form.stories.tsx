@@ -11,20 +11,20 @@ const ControlledFields: FunctionComponent = () => {
   return (
     <div className="grid">
       <TextField
-        label="Required field"
-        type="text"
+        label="required email"
+        type="email"
         required
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />
       <TextField
-        label="Same field"
-        type="text"
+        label="same email"
+        type="email"
         required
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />
-      <button type="submit">Submit</button>
+      <button type="submit">submit</button>
     </div>
   );
 };
@@ -38,8 +38,8 @@ const meta = {
     onSubmitDeny: fn(),
     children: (
       <div className="grid">
-        <TextField label="Required field" type="text" required />
-        <button type="submit">Submit</button>
+        <TextField label="required email" type="email" required />
+        <button type="submit">submit</button>
       </div>
     ),
   },
@@ -81,8 +81,8 @@ export const InputsOutsideForm: Story = {
         <header>
           <TextField
             form="footer-form"
-            label="Required field"
-            type="text"
+            label="required email"
+            type="email"
             required
           />
         </header>

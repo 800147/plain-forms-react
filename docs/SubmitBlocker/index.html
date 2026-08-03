@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Plain-Forms-React: SubmitBlocker</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,<svg viewBox='-10 -15 20 20' xmlns='http://www.w3.org/2000/svg'><text text-anchor='middle'>📄</text></svg>"
+    />
+    <link
+      rel="stylesheet"
+      href="https://800147.github.io/document/src/document.css"
+    />
+    <link rel="stylesheet" href="../style.css" />
+    <script type="module" src="../script.js"></script>
+  </head>
+  <body class="Document">
+    <header class="Document-Header">
+      <nav class="Document-Breadcrumbs">
+        <ul>
+          <li><a href="/">800147.github.io</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <h1>SubmitBlocker</h1>
+
+      <h2>About</h2>
+
+      <p>
+        <code>SubmitBlocker</code> once it present in the form prevents it to be submitted. It can be used to specify errors caused by multiple fields.
+      </p>
+
+      <h2>Usage</h2>
+
+      <pre><code>&lt;Form onSubmit={submitHandler}>
+  &lt;p>Set your password&lt;/p>
+  &lt;TextField
+    label="password"
+    value={pswrd1}
+    onChange={e => setPswrd1(e.target.value)}
+    type="password"
+    required
+  />
+  &lt;TextField
+    label="password once again"
+    value={pswrd2}
+    onChange={e => setPswrd2(e.target.value)}
+    type="password"
+    required
+  />
+  {
+    pswrd1 !== pswrd2 && (
+      &lt;SubmitBlocker>
+        Passwords do not match
+      &lt;/SubmitBlocker>
+    )
+  }
+  &lt;Button type="submit">submit&lt;/Button>
+&lt;/Form></code></pre>
+
+      <h2>Properties</h2>
+
+      <dl>
+        <dt><code>errorVisibilityMode</code> (optional)</dt>
+        <dd>
+          <p><code>"afterSubmit" | "always"</code></p>
+          <p>Specifies the moment when the message is shown.</p>
+          <p>Default value: <code>errorVisibilityMode</code> of the Form. All values except <code>"afterSubmit"</code> will behave as <code>"always"</code></p>
+        </dd>
+
+        <dt><code>className</code> (optional)</dt>
+        <dd>
+          <p><code>string</code></p>
+          <p>className prop for div wrapper</p>
+        </dd>
+
+        <dt><code>inputClassName</code> (optional)</dt>
+        <dd>
+          <p><code>string</code></p>
+          <p>className prop for input</p>
+        </dd>
+
+        <dt><code>style</code> (optional)</dt>
+        <dd>
+          <p><code>CSSProperties</code></p>
+          <p>style prop for div wrapper</p>
+        </dd>
+
+        <dt><code>inputStyle</code> (optional)</dt>
+        <dd>
+          <p><code>CSSProperties</code></p>
+          <p>style prop for input</p>
+        </dd>
+
+        <dt><code>children</code> (optional)</dt>
+        <dd>
+          <p><code>ReactNode</code></p>
+        </dd>
+
+        <dt><code>...props</code></dt>
+        <dd>
+          <p><code>HTMLProps&lt;HTMLInputElement></code></p>
+          <p>All other props will be passed to input element inside SubmitBlocker</p>
+        </dd>
+      </dl>
+    </main>
+
+    <contents-sidebar></contents-sidebar>
+  </body>
+</html>

@@ -80,16 +80,17 @@ const getValidationMessage = (
 const getErrorVisibilityMode = (
   control: FormControl,
   errorVisibilityModeProp?: ErrorVisibilityMode,
+  allowedModes?: ErrorVisibilityMode[],
 ): ErrorVisibilityMode => {
   if (errorVisibilityModeProp) {
     return errorVisibilityModeProp;
   }
 
-  return (
-    (control.form?.dataset?.errorVisibilityMode as
-      | ErrorVisibilityMode
-      | undefined) ?? "afterSubmit"
-  );
+  const mode = (control.form?.dataset?.errorVisibilityMode as
+    | ErrorVisibilityMode
+    | undefined) ?? "afterSubmit";
+
+  return (!allowedModes?.[0] || allowedModes.includes(mode)) ? mode : allowedModes[0]
 };
 
 type usePlainValidationType = (props?: {
@@ -97,6 +98,8 @@ type usePlainValidationType = (props?: {
   customMessages?: CustomMessages;
   customValidation?: CustomValidationFunction;
   errorVisibilityMode?: ErrorVisibilityMode;
+  /** @internal */
+  _allowedModes?: ErrorVisibilityMode[];
   controlRefProp?: Ref<FormControl | null>;
   /** For controlled components */
   valueProp?: AllHTMLAttributes<FormControl>["value"];
@@ -110,6 +113,7 @@ export const usePlainValidation: usePlainValidationType = ({
   customMessages,
   customValidation,
   errorVisibilityMode: errorVisibilityModeProp,
+  _allowedModes,
   controlRefProp,
   valueProp,
 } = {}) => {
@@ -134,7 +138,7 @@ export const usePlainValidation: usePlainValidationType = ({
 
       lastCheckedValueRef.current = control.value;
 
-      const mode = getErrorVisibilityMode(control, errorVisibilityModeProp);
+      const mode = getErrorVisibilityMode(control, errorVisibilityModeProp, _allowedModes);
 
       if (
         mode === "always" ||

@@ -63,8 +63,8 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
-export const ErrorVisibilityModeAfterChange: Story = {
+export const ErrorVisibilityModeAlways: Story = {
   args: {
-    errorVisibilityMode: "afterChange",
+    errorVisibilityMode: "always",
   },
 };

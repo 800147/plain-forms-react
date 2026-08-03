@@ -14,7 +14,6 @@ export interface ControlWrapperProps extends HTMLProps<HTMLInputElement> {
   inputClassname?: string;
   style?: CSSProperties;
   inputStyle?: CSSProperties;
-  noStyles?: boolean;
   children?: ReactNode;
 }
 

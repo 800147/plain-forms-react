@@ -52,13 +52,13 @@ class ContentsSidebar extends HTMLElement {
         url: "/Form/",
         text: "Form",
       },
+      {
+        url: "/SubmitBlocker/",
+        text: "SubmitBlocker",
+      },
       // {
       //   url: "/ControlWrapper/",
       //   text: "ControlWrapper",
-      // },
-      // {
-      //   url: "/SubmitBlocker/",
-      //   text: "SubmitBlocker",
       // },
     ];
   }
