@@ -8,7 +8,10 @@
   "homepage": "https://github.com/800147/plain-forms-react",
   "license": "MIT",
   "author": "Kamalov Boolat <800147@gmail.com> (https://800147.github.io/)",
-  "repository": "github:800147/plain-forms-react",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/800147/plain-forms-react.git"
+  },
   "version": "0.5.7",
   "type": "module",
   "files": [
